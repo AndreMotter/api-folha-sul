@@ -5,6 +5,13 @@ import { FsuUsuarioService } from './fsu_usuario.service';
 export class FsuUsuarioController {
   constructor(private readonly fsuUsuarioService: FsuUsuarioService) {}
 
+  @Get('TesteApi')
+  testeApi() {
+    return {
+      message: 'API Folha Sul funcionando',
+    };
+  }
+
   @Post('Login')
   Login(@Body() data: any) {
     return this.fsuUsuarioService.Login(data.login, data.senha);

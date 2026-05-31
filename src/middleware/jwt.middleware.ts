@@ -6,7 +6,7 @@ export class JwtAuthMiddleware implements NestMiddleware {
   constructor(private jwtService: JwtService) {}
 
   async use(req: any, res: any, next: () => void) {
-    if (req.originalUrl.includes('/fsu-usuario/Login')) {
+    if (req.originalUrl.includes('/fsu-usuario/Login') || req.originalUrl.includes('/fsu-usuario/TesteApi')) {
       return next();
     }
 
