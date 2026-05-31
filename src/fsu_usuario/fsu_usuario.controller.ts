@@ -6,7 +6,7 @@ export class FsuUsuarioController {
   constructor(private readonly fsuUsuarioService: FsuUsuarioService) {}
 
   @Get('TesteApi')
-  testeApi() {
+  TesteApi() {
     return {
       message: 'API Folha Sul funcionando',
     };
