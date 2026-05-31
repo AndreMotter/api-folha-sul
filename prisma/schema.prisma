@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model fsu_usuario {
+  usu_codigo Int                   @id @default(autoincrement())
+  usu_login  String                @unique
+  usu_senha  String
+  analises   fsu_analise_tecnica[]
+}
+
+model fsu_propriedade {
+  pro_codigo    Int          @id @default(autoincrement())
+  pro_descricao String
+  pro_endereco  String?
+  talhoes       fsu_talhao[]
+}
+
+model fsu_talhao {
+  tal_codigo        Int                 @id @default(autoincrement())
+  pro_codigo        Int
+  tal_descricao     String
+  tal_area_hectares Decimal             @db.Decimal(20, 4)
+  tal_latitude      Float?
+  tal_longitude     Float?
+  propriedade       fsu_propriedade     @relation(fields: [pro_codigo], references: [pro_codigo])
+  analises          fsu_analise_tecnica[]
+}
+
+model fsu_safra {
+  saf_codigo      Int                 @id @default(autoincrement())
+  saf_descricao   String
+  saf_data_inicio DateTime
+  saf_data_fim    DateTime?
+  saf_status      Int
+  analises        fsu_analise_tecnica[]
+}
+
+model fsu_analise_tecnica {
+  ant_codigo     Int                          @id @default(autoincrement())
+  tal_codigo     Int
+  saf_codigo     Int
+  usu_codigo     Int
+  ant_observacao String?
+  ant_data_hora  DateTime
+  ant_status     Int
+  talhao         fsu_talhao                   @relation(fields: [tal_codigo], references: [tal_codigo])
+  safra          fsu_safra                    @relation(fields: [saf_codigo], references: [saf_codigo])
+  usuario        fsu_usuario                  @relation(fields: [usu_codigo], references: [usu_codigo])
+  imagens        fsu_analise_tecnica_imagem[]
+}
+
+model fsu_analise_tecnica_imagem {
+  ati_codigo                Int                 @id @default(autoincrement())
+  ant_codigo                Int
+  ati_nome_arquivo          String?
+  ati_imagem                Bytes
+  ati_tipo_arquivo          String?
+  ati_percentual_severidade Decimal?            @db.Decimal(20, 4)
+  analise                   fsu_analise_tecnica @relation(fields: [ant_codigo], references: [ant_codigo])
+}
