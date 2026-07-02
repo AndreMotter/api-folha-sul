@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { z } from 'zod';
 
 export const fsuAnaliseTecnicaSchema = z.object({
-  tal_codigo: z.coerce.number().int(),
+  par_codigo: z.coerce.number().int(),
   saf_codigo: z.coerce.number().int(),
   usu_codigo: z.coerce.number().int(),
   ant_observacao: z.string().optional().nullable(),
@@ -39,7 +39,7 @@ export class FsuAnaliseTecnicaService {
   async ListarTodos() {
     const records = await this.prisma.fsu_analise_tecnica.findMany({
       include: {
-        talhao: true,
+        parcela: { include: { talhao: true } },
         safra: true,
         usuario: true,
         imagens: true,
@@ -52,7 +52,7 @@ export class FsuAnaliseTecnicaService {
     const record = await this.prisma.fsu_analise_tecnica.findUnique({
       where: { ant_codigo },
       include: {
-        talhao: true,
+        parcela: { include: { talhao: true } },
         safra: true,
         usuario: true,
         imagens: true,

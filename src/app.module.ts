@@ -3,6 +3,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { FsuUsuarioModule } from './fsu_usuario/fsu_usuario.module';
 import { FsuPropriedadeModule } from './fsu_propriedade/fsu_propriedade.module';
 import { FsuTalhaoModule } from './fsu_talhao/fsu_talhao.module';
+import { FsuParcelaModule } from './fsu_parcela/fsu_parcela.module';
 import { FsuSafraModule } from './fsu_safra/fsu_safra.module';
 import { FsuAnaliseTecnicaModule } from './fsu_analise_tecnica/fsu_analise_tecnica.module';
 import { FsuAnaliseTecnicaImagemModule } from './fsu_analise_tecnica_imagem/fsu_analise_tecnica_imagem.module';
@@ -19,6 +20,7 @@ import { JwtModule } from '@nestjs/jwt';
     FsuUsuarioModule,
     FsuPropriedadeModule,
     FsuTalhaoModule,
+    FsuParcelaModule,
     FsuSafraModule,
     FsuAnaliseTecnicaModule,
     FsuAnaliseTecnicaImagemModule,

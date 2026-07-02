@@ -29,6 +29,15 @@ model fsu_talhao {
   tal_latitude      Float?
   tal_longitude     Float?
   propriedade       fsu_propriedade     @relation(fields: [pro_codigo], references: [pro_codigo])
+  parcelas          fsu_parcela[]
+}
+
+model fsu_parcela {
+  par_codigo        Int                   @id @default(autoincrement())
+  tal_codigo        Int
+  par_descricao     String
+  par_area_hectares Decimal               @db.Decimal(20, 4)
+  talhao            fsu_talhao            @relation(fields: [tal_codigo], references: [tal_codigo])
   analises          fsu_analise_tecnica[]
 }
 
@@ -43,13 +52,13 @@ model fsu_safra {
 
 model fsu_analise_tecnica {
   ant_codigo     Int                          @id @default(autoincrement())
-  tal_codigo     Int
+  par_codigo     Int
   saf_codigo     Int
   usu_codigo     Int
   ant_observacao String?
   ant_data_hora  DateTime
   ant_status     Int
-  talhao         fsu_talhao                   @relation(fields: [tal_codigo], references: [tal_codigo])
+  parcela        fsu_parcela                  @relation(fields: [par_codigo], references: [par_codigo])
   safra          fsu_safra                    @relation(fields: [saf_codigo], references: [saf_codigo])
   usuario        fsu_usuario                  @relation(fields: [usu_codigo], references: [usu_codigo])
   imagens        fsu_analise_tecnica_imagem[]
