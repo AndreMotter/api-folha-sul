@@ -27,8 +27,8 @@ export class FsuAnaliseTecnicaService {
     if (!record) return record;
     if (record.imagens && Array.isArray(record.imagens)) {
       record.imagens = record.imagens.map((img: any) => {
-        if (img.ati_imagem && Buffer.isBuffer(img.ati_imagem)) {
-          img.ati_imagem = img.ati_imagem.toString('base64');
+        if (img.ati_imagem && typeof img.ati_imagem !== 'string') {
+          img.ati_imagem = Buffer.from(img.ati_imagem).toString('base64');
         }
         return img;
       });
